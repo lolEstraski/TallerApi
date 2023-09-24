@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  database:
+    build: 
+      context: ./api/src/database/
+      dockerfile: Dockerfile
+    restart: always
+    ports: 
+      - 3300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=3106316813
+
+  api:
+    build: 
+      context: ./api/
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+    ports:
+      - 3000:3000
+    environment:
+      - HOST=database
+    links:
+      - database
+
